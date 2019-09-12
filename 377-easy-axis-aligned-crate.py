@@ -1,3 +1,5 @@
+import itertools as it
+
 def fit1(big_x, big_y, small_x, small_y):
     return (big_x//small_x)*(big_y//small_y)
 
@@ -9,14 +11,25 @@ def fit2(big_x, big_y, small_x, small_y):
     return max_crates;
 
 def fit3(a, b, c, x, y, z):
-    p1 = (a//x)*(b//y)*(c//z)
-    p2 = (a//x)*(b//z)*(c//y)
-    p3 = (a//y)*(b//z)*(c//x)
-    p4 = (a//y)*(b//x)*(c//z)
-    p5 = (a//z)*(b//x)*(c//y)
-    p6 = (a//z)*(b//y)*(c//x)
+    big = list([a, b, c])
+    small = it.permutations([x, y, z])
+    res = 0
+    for j in small:
+        k = (big[0]//j[0])*(big[1]//j[1])*(big[2]//j[2])
+        res = max(res, k)
+    return res
 
-    return max(p1, p2, p3, p4, p5, p6)
+def fitn(large_crate, small_crate):
+    small = it.permutations(small_crate)
+    l = len(large_crate)
+    res = 0
+    for j in small:
+        product = 1
+        for k in range(l):
+            product = product*(large_crate[k]//j[k])
+        res = max(res, product)
+    return res
+
 
 print("fit1")
 print(fit1(25, 18, 6, 5))
@@ -38,3 +51,10 @@ print(fit3(10, 10, 10, 1, 1, 1))
 print(fit3(12, 34, 56, 7, 8, 9))
 print(fit3(123, 456, 789, 10, 11, 12))
 print(fit3(1234567, 89101112, 13141516, 171819, 202122, 232425))
+
+print("\nfit20")
+print(fitn([3, 4], [1, 2]))
+print(fitn([123, 456, 789], [10, 11, 12]))
+print(fitn([123, 456, 789, 1011, 1213, 1415], [16, 17, 18, 19, 20, 21]))
+print(fitn([180598, 125683, 146932, 158296, 171997, 204683, 193694, 216231, 177673, 169317, 216456, 220003, 165939, 205613, 152779, 177216, 128838, 126894, 210076, 148407], [1984, 2122, 1760, 2059, 1278, 2017, 1443, 2223, 2169, 1502, 1274, 1740, 1740, 1768, 1295, 1916, 2249, 2036, 1886, 2010]))
+# 4281855455197643306306491981973422080000
