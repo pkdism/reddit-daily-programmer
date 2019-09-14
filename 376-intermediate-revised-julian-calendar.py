@@ -1,3 +1,19 @@
+def is_leap(year):
+    ans = 0
+    if year % 4 == 0:
+        ans = 1
+    if year % 100 == 0:
+        ans = 0
+    if year % 900 in [200, 600]:
+        ans = 1
+    return ans
+
+def leaps_recursive(start, end):
+    if start >= end:
+        return 0
+    else:
+        return is_leap(start) + leaps_recursive(start + 1, end)
+
 def leaps(start, end):
     ly = 0
     for i in range(start, end, 1):
