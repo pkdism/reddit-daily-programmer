@@ -1,8 +1,6 @@
 hours = [0]*24
 
-n = int(input())
-
-for i in range(n):
+for i in range(int(input())):
     a, b = map(int, input().split())
     for j in range(a,b):
         hours[j] = 1
